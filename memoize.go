@@ -16,11 +16,14 @@ type Memoizer[In any, Out any, F func(In) Out] struct {
 }
 
 func (m *Memoizer[In, Out, F]) Do(i In) Out {
-	once, _ := m.Cache.LoadOrStore(i,
-		sync.OnceValue(
-			func() Out { return m.Fun(i) },
-		),
-	)
+	once, ok := m.Cache.Load(i)
+	if !ok {
+		once, _ = m.Cache.LoadOrStore(i,
+			sync.OnceValue(
+				func() Out { return m.Fun(i) },
+			),
+		)
+	}
 
 	return once()
 }

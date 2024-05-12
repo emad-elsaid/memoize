@@ -6,10 +6,12 @@ import (
 	"testing"
 )
 
+const maxKeySpace = 6
+
 var returns int
 
 func BenchmarkMemoizer(b *testing.B) {
-	for i := 1; i < 6; i++ {
+	for i := 1; i < maxKeySpace; i++ {
 		keysN := math.Pow(10, float64(i))
 		name := fmt.Sprintf("Keys:%.f", keysN)
 
@@ -34,7 +36,7 @@ func BenchmarkMemoizer(b *testing.B) {
 }
 
 func BenchmarkMemoizerParallel(b *testing.B) {
-	for i := 1; i < 6; i++ {
+	for i := 1; i < maxKeySpace; i++ {
 		keysN := math.Pow(10, float64(i))
 		name := fmt.Sprintf("Keys:%.f", keysN)
 

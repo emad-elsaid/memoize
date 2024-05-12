@@ -7,7 +7,7 @@ import (
 )
 
 func BenchmarkGoplio(b *testing.B) {
-	for i := 1; i < 6; i++ {
+	for i := 1; i < maxKeySpace; i++ {
 		keysN := math.Pow(10, float64(i))
 		name := fmt.Sprintf("Keys:%.f", keysN)
 
@@ -32,7 +32,7 @@ func BenchmarkGoplio(b *testing.B) {
 }
 
 func BenchmarkGoplioParallel(b *testing.B) {
-	for i := 1; i < 6; i++ {
+	for i := 1; i < maxKeySpace; i++ {
 		keysN := math.Pow(10, float64(i))
 		name := fmt.Sprintf("Keys:%.f", keysN)
 
