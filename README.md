@@ -26,7 +26,7 @@ var NewPage = MemoryMemoizerWithErr(func(name string) (p Page, err error) {
 > [!IMPORTANT]
 > This package is still being tested, use it with caution
 
-# Brenchmarks results agains gopl.io
+# Brenchmarks results against gopl.io
 
 ```
 go test --bench .
