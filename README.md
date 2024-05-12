@@ -26,7 +26,7 @@ var NewPage = MemoryMemoizerWithErr(func(name string) (p Page, err error) {
 > [!IMPORTANT]
 > This package is still being tested, use it with caution
 
-# Brenchmarks results against gopl.io
+# Brenchmarks results
 
 ```
 ➜ go test --bench .
@@ -34,16 +34,6 @@ goos: linux
 goarch: amd64
 pkg: github.com/emad-elsaid/memoize
 cpu: AMD Ryzen 7 2700X Eight-Core Processor
-BenchmarkGoplio/Keys:10-16      	1000000	     1287 ns/op
-BenchmarkGoplio/Keys:100-16     	 940515	     1294 ns/op
-BenchmarkGoplio/Keys:1000-16    	 897920	     1232 ns/op
-BenchmarkGoplio/Keys:10000-16   	 847644	     1328 ns/op
-BenchmarkGoplio/Keys:100000-16  	 776767	     1542 ns/op
-BenchmarkGoplioParallel/Keys:10-16         	1000000	     1029 ns/op
-BenchmarkGoplioParallel/Keys:100-16        	 971307	     1188 ns/op
-BenchmarkGoplioParallel/Keys:1000-16       	1000000	     1125 ns/op
-BenchmarkGoplioParallel/Keys:10000-16      	1000000	     1120 ns/op
-BenchmarkGoplioParallel/Keys:100000-16     	1000000	     1239 ns/op
 BenchmarkMemoizer/Keys:10-16               	25258276	       43.08 ns/op
 BenchmarkMemoizer/Keys:100-16              	25672358	       46.79 ns/op
 BenchmarkMemoizer/Keys:1000-16             	27347005	       42.03 ns/op
