@@ -28,7 +28,7 @@ func (m *Memoizer[In, Out, F]) Do(i In) Out {
 	return once()
 }
 
-func MemoryMemoizer[In any, Out any, F func(In) Out](fun F) F {
+func New[In any, Out any, F func(In) Out](fun F) F {
 	m := Memoizer[In, Out, F]{
 		Cache: &MemoryCache[In, func() Out]{},
 		Fun:   fun,
@@ -55,7 +55,7 @@ func (m *MemoizerWithErr[In, Out, F]) Do(i In) (Out, error) {
 	return once()
 }
 
-func MemoryMemoizerWithErr[In any, Out any, F func(In) (Out, error)](fun F) F {
+func NewWithErr[In any, Out any, F func(In) (Out, error)](fun F) F {
 	m := MemoizerWithErr[In, Out, F]{
 		Cache: &MemoryCache[In, func() (Out, error)]{},
 		Fun:   fun,

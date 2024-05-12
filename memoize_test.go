@@ -15,7 +15,7 @@ func TestMemoizer(t *testing.T) {
 		return counters[k]
 	}
 
-	mem := MemoryMemoizer(inc)
+	mem := New(inc)
 
 	concurrency := 100
 	var wg sync.WaitGroup
@@ -56,7 +56,7 @@ func TestMemoizerWithErr(t *testing.T) {
 		return counters[k], nil
 	}
 
-	mem := MemoryMemoizerWithErr(inc)
+	mem := NewWithErr(inc)
 
 	concurrency := 100
 	var wg sync.WaitGroup

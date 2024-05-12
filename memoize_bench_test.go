@@ -17,7 +17,7 @@ func BenchmarkMemoizer(b *testing.B) {
 
 		b.Run(name, func(b *testing.B) {
 
-			mem := MemoryMemoizerWithErr(func(k string) (int, error) { return len(k), nil })
+			mem := NewWithErr(func(k string) (int, error) { return len(k), nil })
 
 			keys := []string{}
 			for i := range int64(keysN) {
@@ -42,7 +42,7 @@ func BenchmarkMemoizerParallel(b *testing.B) {
 
 		b.Run(name, func(b *testing.B) {
 
-			mem := MemoryMemoizerWithErr(func(k string) (int, error) { return len(k), nil })
+			mem := NewWithErr(func(k string) (int, error) { return len(k), nil })
 
 			keys := []string{}
 			for i := range int64(keysN) {

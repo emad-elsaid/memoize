@@ -6,7 +6,7 @@ Golang Memoize implementation for functions of type `func(any) any` and
 Simple usecase
 
 ```go
-var NewPage = MemoryMemoizer(func(name string) (p Page) {
+var NewPage = memoize.New(func(name string) (p Page) {
     // your normal logic here
 })
 ```
@@ -18,7 +18,7 @@ value of `name` and will return the same value for the same input always.
 Also function that returns 2 values can be memoized:
 
 ```go
-var NewPage = MemoryMemoizerWithErr(func(name string) (p Page, err error) {
+var NewPage = memoize.NewWithErr(func(name string) (p Page, err error) {
     // your normal logic here
 })
 ```
