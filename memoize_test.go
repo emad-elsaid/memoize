@@ -12,7 +12,7 @@ func TestMemoizer(t *testing.T) {
 	inc := func(k string) (int, error) {
 		counters[k]++
 
-		return 0, nil
+		return counters[k], nil
 	}
 
 	mem := MemoryMemoizerWithErr(inc)
@@ -22,9 +22,14 @@ func TestMemoizer(t *testing.T) {
 	wg.Add(concurrency)
 
 	routine := func() {
-		mem("key1")
-		mem("key2")
-		mem("key3")
+		r, _ := mem("key1")
+		assert.Equal(t, 1, r)
+
+		r, _ = mem("key2")
+		assert.Equal(t, 1, r)
+
+		r, _ = mem("key3")
+		assert.Equal(t, 1, r)
 		wg.Done()
 	}
 

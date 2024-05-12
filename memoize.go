@@ -7,6 +7,7 @@ type Cacher[K any, V any] interface {
 	// it stores and returns the given value. The loaded result is true if the
 	// value was loaded, false if stored.
 	LoadOrStore(key K, value V) (actual V, loaded bool)
+	Load(key K) (value V, ok bool)
 }
 
 type Memoizer[In any, Out any, F func(In) Out] struct {
@@ -39,11 +40,14 @@ type MemoizerWithErr[In any, Out any, F func(In) (Out, error)] struct {
 }
 
 func (m *MemoizerWithErr[In, Out, F]) Do(i In) (Out, error) {
-	once, _ := m.Cache.LoadOrStore(i,
-		sync.OnceValues(
-			func() (Out, error) { return m.Fun(i) },
-		),
-	)
+	once, ok := m.Cache.Load(i)
+	if !ok {
+		once, _ = m.Cache.LoadOrStore(i,
+			sync.OnceValues(
+				func() (Out, error) { return m.Fun(i) },
+			),
+		)
+	}
 
 	return once()
 }
