@@ -24,12 +24,8 @@ func (m *Memoizer[In, Out, F]) Do(i In) Out {
 		sync.OnceValue(
 			func() Out {
 				val := m.Fun(i)
-				_, loaded := m.Cache.LoadOrStore(i, val)
-				// Checking loaded to make sur ethe order of Store/Delete is correct
-				// otherwise the compiler reorder them in reverse
-				if !loaded {
-					m.onces.Delete(i)
-				}
+				m.Cache.Store(i, val)
+				// m.onces.Delete(i)
 
 				return val
 			},
@@ -68,10 +64,8 @@ func (m *MemoizerWithErr[In, Out, F]) Do(i In) (Out, error) {
 			func() (Out, error) {
 				v, err := m.Fun(i)
 				pair := Pair[Out]{V: v, err: err}
-				_, loaded := m.Cache.LoadOrStore(i, pair)
-				if !loaded {
-					m.onces.Delete(i)
-				}
+				m.Cache.Store(i, pair)
+				// m.onces.Delete(i)
 
 				return v, err
 			},
