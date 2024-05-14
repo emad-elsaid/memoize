@@ -9,7 +9,10 @@ import (
 
 func TestMemoizer(t *testing.T) {
 	counters := map[string]int{}
+	var l sync.Mutex
 	inc := func(k string) int {
+		l.Lock()
+		defer l.Unlock()
 		counters[k]++
 
 		return counters[k]
@@ -50,7 +53,11 @@ func TestMemoizer(t *testing.T) {
 
 func TestMemoizerWithErr(t *testing.T) {
 	counters := map[string]int{}
+	var l sync.Mutex
 	inc := func(k string) (int, error) {
+		l.Lock()
+		defer l.Unlock()
+
 		counters[k]++
 
 		return counters[k], nil

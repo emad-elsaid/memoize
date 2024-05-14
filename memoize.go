@@ -3,6 +3,7 @@ package memoize
 import "sync"
 
 type Cacher[K any, V any] interface {
+	LoadOrStore(key K, value V) (actual V, loaded bool)
 	Store(key K, value V)
 	Load(key K) (value V, ok bool)
 	Delete(key K)
@@ -15,18 +16,27 @@ type Memoizer[In any, Out any, F func(In) Out] struct {
 }
 
 func (m *Memoizer[In, Out, F]) Do(i In) Out {
-	val, ok := m.Cache.Load(i)
-	if !ok {
-		once, _ := m.onces.LoadOrStore(i,
-			sync.OnceValue(
-				func() Out { return m.Fun(i) },
-			),
-		)
-		val = once()
-		m.Cache.Store(i, val)
+	if val, ok := m.Cache.Load(i); ok {
+		return val
 	}
 
-	return val
+	once, _ := m.onces.LoadOrStore(i,
+		sync.OnceValue(
+			func() Out {
+				val := m.Fun(i)
+				_, loaded := m.Cache.LoadOrStore(i, val)
+				// Checking loaded to make sur ethe order of Store/Delete is correct
+				// otherwise the compiler reorder them in reverse
+				if !loaded {
+					m.onces.Delete(i)
+				}
+
+				return val
+			},
+		),
+	)
+
+	return once()
 }
 
 func New[In any, Out any, F func(In) Out](fun F) F {
@@ -49,8 +59,7 @@ type MemoizerWithErr[In any, Out any, F func(In) (Out, error)] struct {
 }
 
 func (m *MemoizerWithErr[In, Out, F]) Do(i In) (Out, error) {
-	val, ok := m.Cache.Load(i)
-	if ok {
+	if val, ok := m.Cache.Load(i); ok {
 		return val.V, val.err
 	}
 
@@ -59,8 +68,10 @@ func (m *MemoizerWithErr[In, Out, F]) Do(i In) (Out, error) {
 			func() (Out, error) {
 				v, err := m.Fun(i)
 				pair := Pair[Out]{V: v, err: err}
-				m.Cache.Store(i, pair)
-				m.onces.Delete(i)
+				_, loaded := m.Cache.LoadOrStore(i, pair)
+				if !loaded {
+					m.onces.Delete(i)
+				}
 
 				return v, err
 			},
