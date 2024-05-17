@@ -2,12 +2,12 @@ package memoize
 
 import "sync"
 
-type Memoizer[In any, Out any, F func(In) Out] struct {
+type Memoizer[In any, Out any] struct {
 	cache *Cache[In, func() Out]
-	Fun   F
+	Fun   func(In) Out
 }
 
-func (m *Memoizer[In, Out, F]) Do(i In) Out {
+func (m *Memoizer[In, Out]) Do(i In) Out {
 	once, ok := m.cache.Load(i)
 	if !ok {
 		once, _ = m.cache.LoadOrStore(i,
@@ -20,8 +20,8 @@ func (m *Memoizer[In, Out, F]) Do(i In) Out {
 	return once()
 }
 
-func New[In any, Out any, F func(In) Out](fun F) F {
-	m := Memoizer[In, Out, F]{
+func New[In any, Out any](fun func(In) Out) func(In) Out {
+	m := Memoizer[In, Out]{
 		cache: &Cache[In, func() Out]{},
 		Fun:   fun,
 	}
