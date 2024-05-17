@@ -2,15 +2,17 @@ package memoize
 
 import "sync"
 
+// MemoizerWithErr wraps a function func(In) (Out, error)
 type MemoizerWithErr[In any, Out any] struct {
-	Cache *Cache[In, func() (Out, error)]
+	cache Cache[In, func() (Out, error)]
 	Fun   func(In) (Out, error)
 }
 
+// Do calls the memoized function with input i and memoize the result and return it
 func (m *MemoizerWithErr[In, Out]) Do(i In) (Out, error) {
-	once, ok := m.Cache.Load(i)
+	once, ok := m.cache.Load(i)
 	if !ok {
-		once, _ = m.Cache.LoadOrStore(i,
+		once, _ = m.cache.LoadOrStore(i,
 			sync.OnceValues(
 				func() (Out, error) { return m.Fun(i) },
 			),
@@ -20,10 +22,10 @@ func (m *MemoizerWithErr[In, Out]) Do(i In) (Out, error) {
 	return once()
 }
 
+// NewWithErr wraps a function fun that returns a value and error in a MemoizerWithErr and returns its Do method
 func NewWithErr[In any, Out any](fun func(In) (Out, error)) func(In) (Out, error) {
 	m := MemoizerWithErr[In, Out]{
-		Cache: &Cache[In, func() (Out, error)]{},
-		Fun:   fun,
+		Fun: fun,
 	}
 
 	return m.Do

@@ -2,17 +2,13 @@ package memoize
 
 import "sync"
 
-type Cacher[K any, V any] interface {
-	Store(key K, value V)
-	Load(key K) (value V, ok bool)
-}
-
 type MemoizerWithCache[In, Out any] struct {
 	inFlight Cache[In, *sync.Mutex]
 	Cache    Cacher[In, Out]
 	Fun      func(In) Out
 }
 
+// Do calls the memoized function with input i and memoize the result and return it
 func (m *MemoizerWithCache[In, Out]) Do(i In) Out {
 	inFlight, _ := m.inFlight.LoadOrStore(i, new(sync.Mutex))
 	inFlight.Lock()
@@ -30,6 +26,7 @@ func (m *MemoizerWithCache[In, Out]) Do(i In) Out {
 	return val
 }
 
+// NewWithCache takes a cacher and a function to memoize and returns, creates a MemoizerWithCache for it that uses the cacher c and returns its Do method
 func NewWithCache[In any, Out any](c Cacher[In, Out], fun func(In) Out) func(In) Out {
 	m := MemoizerWithCache[In, Out]{
 		Cache: c,

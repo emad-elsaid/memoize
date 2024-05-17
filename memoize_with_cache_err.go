@@ -13,6 +13,7 @@ type MemoizerWithCacheErr[In any, Out any] struct {
 	Fun   func(In) (Out, error)
 }
 
+// Do calls the memoized function with input i and memoize the result and return it
 func (m *MemoizerWithCacheErr[In, Out]) Do(i In) (Out, error) {
 	inFlight, _ := m.inFlight.LoadOrStore(i, new(sync.Mutex))
 	inFlight.Lock()
@@ -31,6 +32,7 @@ func (m *MemoizerWithCacheErr[In, Out]) Do(i In) (Out, error) {
 	return val.V, val.err
 }
 
+// NewWithCacheErr creates a new MemoizerWithCacheErr that wraps fun and uses the c Cacher. and returns the Do function.
 func NewWithCacheErr[In any, Out any](c Cacher[In, Pair[Out]], fun func(In) (Out, error)) func(In) (Out, error) {
 	m := MemoizerWithCacheErr[In, Out]{
 		Cache: c,

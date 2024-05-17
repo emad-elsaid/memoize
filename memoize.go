@@ -2,11 +2,13 @@ package memoize
 
 import "sync"
 
+// Memoizer memoizes func(In) Out function
 type Memoizer[In any, Out any] struct {
-	cache *Cache[In, func() Out]
+	cache Cache[In, func() Out]
 	Fun   func(In) Out
 }
 
+// Do calls the memoized function with input i and memoize the result and return it
 func (m *Memoizer[In, Out]) Do(i In) Out {
 	once, ok := m.cache.Load(i)
 	if !ok {
@@ -20,10 +22,10 @@ func (m *Memoizer[In, Out]) Do(i In) Out {
 	return once()
 }
 
+// New creates a new memoizer wrapping func and returning the Memoizer Do function directly
 func New[In any, Out any](fun func(In) Out) func(In) Out {
 	m := Memoizer[In, Out]{
-		cache: &Cache[In, func() Out]{},
-		Fun:   fun,
+		Fun: fun,
 	}
 
 	return m.Do
