@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestMemoizer(t *testing.T) {
+func TestMemoizerWithCache(t *testing.T) {
 	counters := map[string]int{}
 	var l sync.Mutex
 	inc := func(k string) int {
@@ -18,7 +18,7 @@ func TestMemoizer(t *testing.T) {
 		return counters[k]
 	}
 
-	mem := New(inc)
+	mem := NewWithCache(&Cache[string, int]{}, inc)
 
 	concurrency := 100
 	var wg sync.WaitGroup
@@ -51,7 +51,7 @@ func TestMemoizer(t *testing.T) {
 	assert.Equal(t, expected, counters)
 }
 
-func TestMemoizerWithErr(t *testing.T) {
+func TestMemoizerWithCacheErr(t *testing.T) {
 	counters := map[string]int{}
 	var l sync.Mutex
 	inc := func(k string) (int, error) {
@@ -63,7 +63,7 @@ func TestMemoizerWithErr(t *testing.T) {
 		return counters[k], nil
 	}
 
-	mem := NewWithErr(inc)
+	mem := NewWithCacheErr(&Cache[string, Pair[int]]{}, inc)
 
 	concurrency := 100
 	var wg sync.WaitGroup

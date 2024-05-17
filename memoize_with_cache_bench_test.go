@@ -6,18 +6,16 @@ import (
 	"testing"
 )
 
-const maxKeySpace = 6
-
-var returns int
-
-func BenchmarkMemoizer(b *testing.B) {
+func BenchmarkMemoizerWithCache(b *testing.B) {
 	for i := 1; i < maxKeySpace; i++ {
 		keysN := math.Pow(10, float64(i))
 		name := fmt.Sprintf("Keys:%.f", keysN)
 
 		b.Run(name, func(b *testing.B) {
 
-			mem := NewWithErr(func(k string) (int, error) { return len(k), nil })
+			mem := NewWithCache(
+				&Cache[string, int]{},
+				func(k string) int { return len(k) })
 
 			keys := []string{}
 			for i := range int64(keysN) {
@@ -27,7 +25,7 @@ func BenchmarkMemoizer(b *testing.B) {
 			b.ResetTimer()
 			for i := range b.N {
 				k := keys[i%len(keys)]
-				r, _ := mem(k)
+				r := mem(k)
 				returns = r
 			}
 
@@ -35,14 +33,16 @@ func BenchmarkMemoizer(b *testing.B) {
 	}
 }
 
-func BenchmarkMemoizerParallel(b *testing.B) {
+func BenchmarkMemoizerWithCacheParallel(b *testing.B) {
 	for i := 1; i < maxKeySpace; i++ {
 		keysN := math.Pow(10, float64(i))
 		name := fmt.Sprintf("Keys:%.f", keysN)
 
 		b.Run(name, func(b *testing.B) {
 
-			mem := NewWithErr(func(k string) (int, error) { return len(k), nil })
+			mem := NewWithCache(
+				&Cache[string, int]{},
+				func(k string) int { return len(k) })
 
 			keys := []string{}
 			for i := range int64(keysN) {
@@ -54,7 +54,7 @@ func BenchmarkMemoizerParallel(b *testing.B) {
 				i := 0
 				for b.Next() {
 					k := keys[i%len(keys)]
-					r, _ := mem(k)
+					r := mem(k)
 					returns = r
 					i++
 				}
