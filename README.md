@@ -6,17 +6,17 @@ Golang Memoize implementation for functions of type `func(any) any` and
 ## Guarantees
 
 Memoize premetives offers the following guarantees for `Memoizer` and `MemoizerWithErr`:
-* Duplicate function call supression
+* Duplicate function call suppression
 * 0 allocation
 * Dependency only on stdlib
 * Low overhead
 
 And for `MemoizerWithCache*` premitives:
-* Duplicate function call supression
+* Duplicate function call suppression
 * Dependency only on stdlib
 
 
-The reason `MemoizerWithCache` doesn't guarantee 0 allocation is that it needs extra synchronization mechanism to guarantee the duplicate function call supression which adds around 5-8 allocations/op and adds an overhead around 400-800ns/op
+The reason `MemoizerWithCache` doesn't guarantee 0 allocation is that it needs extra synchronization mechanism to guarantee the duplicate function call suppression which adds around 5-8 allocations/op and adds an overhead around 400-800ns/op
 
 ## Usage
 
