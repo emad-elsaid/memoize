@@ -75,6 +75,12 @@ type Cacher[K any, V any] interface {
 
 # Brenchmarks
 
+Each struct is tested with two benchmarks:
+* Sequencial executions
+* Parallel executions
+
+And each benchmark is repeated for different key space sizes to see how it reacts to smaller vs. large key spaces
+
 ```
 pkg: github.com/emad-elsaid/memoize
 cpu: 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz
