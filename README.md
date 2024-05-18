@@ -63,7 +63,7 @@ type Cacher[K any, V any] interface {
 
 # Note on Cacher interface
 
-* `memoize` requier the cache interface to implement two simple `Load` and `Store` functions
+* `memoize` require the cache interface to implement two simple `Load` and `Store` functions
 * So you can adapt any other caching library to `memoize`
 * This will give you a very powerful memoization patterns where you can store your cache in memory, file, remote system or have failovers with multiple layers of caching.
 * This also means `memoize` package will not remove any items from the cache, it's the cache implementation responsibility to manage it's size, TTL, and communication with remote systems
