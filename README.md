@@ -67,6 +67,7 @@ type Cacher[K any, V any] interface {
 * So you can adapt any other caching library to `memoize`
 * This will give you a very powerful memoization patterns where you can store your cache in memory, file, remote system or have failovers with multiple layers of caching.
 * This also means `memoize` package will not remove any items from the cache, it's the cache implementation responsibility to manage it's size, TTL, and communication with remote systems
+* `memoize` comes with 1 concurrency safe implementation of the cache `Cache`, stored in memory and uses Go generics. packed by `sync.Map`
 
 
 > [!IMPORTANT]
