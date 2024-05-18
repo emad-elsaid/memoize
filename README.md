@@ -30,7 +30,7 @@ var NewPage = memoize.New(func(name string) (p Page) {
 })
 ```
 
-in the previous snippet will make sure the function runs only once for each
+The previous snippet will make sure the function runs only once for each
 value of `name` and will return the same value for the same input always.
 
 
@@ -60,6 +60,14 @@ type Cacher[K any, V any] interface {
 	Load(key K) (value V, ok bool)
 }
 ```
+
+# Note on Cacher interface
+
+* `memoize` requier the cache interface to implement two simple `Load` and `Store` functions
+* So you can adapt any other caching library to `memoize`
+* This will give you a very powerful memoization patterns where you can store your cache in memory, file, remote system or have failovers with multiple layers of caching.
+* This also means `memoize` package will not remove any items from the cache, it's the cache implementation responsibility to manage it's size, TTL, and communication with remote systems
+
 
 > [!IMPORTANT]
 > This package is still being tested, use it with caution
