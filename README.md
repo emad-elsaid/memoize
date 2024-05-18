@@ -2,6 +2,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/emad-elsaid/memoize.svg)](https://pkg.go.dev/github.com/emad-elsaid/memoize)
 [![Go Report Card](https://goreportcard.com/badge/github.com/emad-elsaid/memoize)](https://goreportcard.com/report/github.com/emad-elsaid/memoize)
+[![codecov](https://codecov.io/gh/emad-elsaid/memoize/graph/badge.svg?token=QBXTR1XRD6)](https://codecov.io/gh/emad-elsaid/memoize)
 
 Golang Memoize implementation for functions of type `func(any) any` and
 `func(any) (any, error)`. Safe for concurrent use.
