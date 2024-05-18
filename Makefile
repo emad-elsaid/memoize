@@ -3,7 +3,7 @@ TEST=.
 all: test bench
 
 test:
-	go test $(TEST) -count=1 -race
+	go test $(TEST) -count=1 -race -coverprofile /tmp/cover.out
 
 bench:
 	go test -benchmem -bench $(TEST)
