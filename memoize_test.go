@@ -3,8 +3,6 @@ package memoize
 import (
 	"sync"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func TestMemoizer(t *testing.T) {
@@ -23,13 +21,13 @@ func TestMemoizer(t *testing.T) {
 
 	routine := func() {
 		r := mem("key1")
-		assert.Equal(t, 1, r)
+		assertEqual(t, 1, r)
 
 		r = mem("key2")
-		assert.Equal(t, 1, r)
+		assertEqual(t, 1, r)
 
 		r = mem("key3")
-		assert.Equal(t, 1, r)
+		assertEqual(t, 1, r)
 		wg.Done()
 	}
 
@@ -45,5 +43,5 @@ func TestMemoizer(t *testing.T) {
 		"key3": 1,
 	}
 
-	assert.Equal(t, expected, counters)
+	assertEqualMaps(t, expected, counters)
 }
