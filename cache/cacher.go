@@ -5,7 +5,7 @@ type Loader[K, V any] interface {
 	Load(key K) (value V, ok bool)
 }
 
-// Storer is an interfade that can be used to store key value
+// Storer is an interface that can be used to store key value
 type Storer[K, V any] interface {
 	Store(key K, value V)
 }
