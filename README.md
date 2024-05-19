@@ -61,7 +61,7 @@ type Cacher[K any, V any] interface {
 }
 ```
 
-# Note on Cacher interface
+## Note on Cacher interface
 
 * `memoize` require the cache interface to implement two simple `Load` and `Store` functions
 * So you can adapt any other caching library to `memoize`
@@ -69,7 +69,7 @@ type Cacher[K any, V any] interface {
 * This also means `memoize` package will not remove any items from the cache, it's the cache implementation responsibility to manage it's size, TTL, and communication with remote systems
 * `memoize` comes with 1 concurrency safe implementation of the cache `Cache`, stored in memory and uses Go generics. packed by `sync.Map`
 
-# Cache subpackage
+## Cache subpackage
 
 * `memoize` include a subpackage `cache` which provides several implementations for the `Cacher` interface
 * `Cache` is a simple in-memory forever cacher
@@ -79,7 +79,7 @@ type Cacher[K any, V any] interface {
 > [!IMPORTANT]
 > This package is still being tested, use it with caution
 
-# Brenchmarks
+## Brenchmarks
 
 Each struct is tested with two benchmarks:
 * Sequencial executions
