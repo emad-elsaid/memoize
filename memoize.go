@@ -27,7 +27,7 @@ func (m *Memoizer[In, Out]) Do(i In) Out {
 }
 
 // New creates a new memoizer wrapping func and returning the Memoizer Do function directly
-func New[In any, Out any](fun func(In) Out) func(In) Out {
+func New[In, Out any](fun func(In) Out) func(In) Out {
 	m := Memoizer[In, Out]{
 		Fun: fun,
 	}

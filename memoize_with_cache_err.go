@@ -38,7 +38,7 @@ func (m *MemoizerWithCacheErr[In, Out]) Do(i In) (Out, error) {
 }
 
 // NewWithCacheErr creates a new MemoizerWithCacheErr that wraps fun and uses the c Cacher. and returns the Do function.
-func NewWithCacheErr[In any, Out any](c cache.Cacher[In, Pair[Out]], fun func(In) (Out, error)) func(In) (Out, error) {
+func NewWithCacheErr[In, Out any](c cache.Cacher[In, Pair[Out]], fun func(In) (Out, error)) func(In) (Out, error) {
 	m := MemoizerWithCacheErr[In, Out]{
 		Cache: c,
 		Fun:   fun,

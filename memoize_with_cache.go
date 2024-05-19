@@ -31,7 +31,7 @@ func (m *MemoizerWithCache[In, Out]) Do(i In) Out {
 }
 
 // NewWithCache takes a cacher and a function to memoize and returns, creates a MemoizerWithCache for it that uses the cacher c and returns its Do method
-func NewWithCache[In any, Out any](c cache.Cacher[In, Out], fun func(In) Out) func(In) Out {
+func NewWithCache[In, Out any](c cache.Cacher[In, Out], fun func(In) Out) func(In) Out {
 	m := MemoizerWithCache[In, Out]{
 		Cache: c,
 		Fun:   fun,

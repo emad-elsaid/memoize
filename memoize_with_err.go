@@ -27,7 +27,7 @@ func (m *MemoizerWithErr[In, Out]) Do(i In) (Out, error) {
 }
 
 // NewWithErr wraps a function fun that returns a value and error in a MemoizerWithErr and returns its Do method
-func NewWithErr[In any, Out any](fun func(In) (Out, error)) func(In) (Out, error) {
+func NewWithErr[In, Out any](fun func(In) (Out, error)) func(In) (Out, error) {
 	m := MemoizerWithErr[In, Out]{
 		Fun: fun,
 	}
