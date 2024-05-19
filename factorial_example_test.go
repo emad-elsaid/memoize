@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func ExampleFactorial() {
+func ExampleNew_factorial() {
 	var factorial func(uint64) uint64
 	factorial = New(func(i uint64) uint64 {
 		if i == 0 {
