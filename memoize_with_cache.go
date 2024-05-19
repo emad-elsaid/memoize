@@ -1,10 +1,14 @@
 package memoize
 
-import "sync"
+import (
+	"sync"
+
+	"github.com/emad-elsaid/memoize/cache"
+)
 
 type MemoizerWithCache[In, Out any] struct {
-	inFlight Cache[In, *sync.Mutex]
-	Cache    Cacher[In, Out]
+	inFlight cache.Cache[In, *sync.Mutex]
+	Cache    cache.Cacher[In, Out]
 	Fun      func(In) Out
 }
 
@@ -27,7 +31,7 @@ func (m *MemoizerWithCache[In, Out]) Do(i In) Out {
 }
 
 // NewWithCache takes a cacher and a function to memoize and returns, creates a MemoizerWithCache for it that uses the cacher c and returns its Do method
-func NewWithCache[In any, Out any](c Cacher[In, Out], fun func(In) Out) func(In) Out {
+func NewWithCache[In any, Out any](c cache.Cacher[In, Out], fun func(In) Out) func(In) Out {
 	m := MemoizerWithCache[In, Out]{
 		Cache: c,
 		Fun:   fun,

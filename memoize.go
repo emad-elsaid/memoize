@@ -1,10 +1,14 @@
 package memoize
 
-import "sync"
+import (
+	"sync"
+
+	"github.com/emad-elsaid/memoize/cache"
+)
 
 // Memoizer memoizes func(In) Out function
 type Memoizer[In any, Out any] struct {
-	cache Cache[In, func() Out]
+	cache cache.Cache[In, func() Out]
 	Fun   func(In) Out
 }
 

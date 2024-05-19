@@ -3,6 +3,8 @@ package memoize
 import (
 	"sync"
 	"testing"
+
+	. "github.com/emad-elsaid/memoize/cache"
 )
 
 func TestMemoizerWithCache(t *testing.T) {

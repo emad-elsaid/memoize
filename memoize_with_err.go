@@ -1,10 +1,14 @@
 package memoize
 
-import "sync"
+import (
+	"sync"
+
+	"github.com/emad-elsaid/memoize/cache"
+)
 
 // MemoizerWithErr wraps a function func(In) (Out, error)
 type MemoizerWithErr[In any, Out any] struct {
-	cache Cache[In, func() (Out, error)]
+	cache cache.Cache[In, func() (Out, error)]
 	Fun   func(In) (Out, error)
 }
 

@@ -1,4 +1,4 @@
-TEST=.
+TEST=./...
 
 all: test bench
 

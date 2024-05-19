@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"math"
 	"testing"
+
+	. "github.com/emad-elsaid/memoize/cache"
 )
 
 func BenchmarkMemoizerWithCache(b *testing.B) {

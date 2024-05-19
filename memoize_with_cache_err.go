@@ -1,6 +1,10 @@
 package memoize
 
-import "sync"
+import (
+	"sync"
+
+	"github.com/emad-elsaid/memoize/cache"
+)
 
 // Pair is a tuple of value of type T and an error
 type Pair[T any] struct {
@@ -8,9 +12,9 @@ type Pair[T any] struct {
 	Err error
 }
 type MemoizerWithCacheErr[In any, Out any] struct {
-	inFlight Cache[In, *sync.Mutex]
+	inFlight cache.Cache[In, *sync.Mutex]
 
-	Cache Cacher[In, Pair[Out]]
+	Cache cache.Cacher[In, Pair[Out]]
 	Fun   func(In) (Out, error)
 }
 
@@ -34,7 +38,7 @@ func (m *MemoizerWithCacheErr[In, Out]) Do(i In) (Out, error) {
 }
 
 // NewWithCacheErr creates a new MemoizerWithCacheErr that wraps fun and uses the c Cacher. and returns the Do function.
-func NewWithCacheErr[In any, Out any](c Cacher[In, Pair[Out]], fun func(In) (Out, error)) func(In) (Out, error) {
+func NewWithCacheErr[In any, Out any](c cache.Cacher[In, Pair[Out]], fun func(In) (Out, error)) func(In) (Out, error) {
 	m := MemoizerWithCacheErr[In, Out]{
 		Cache: c,
 		Fun:   fun,
