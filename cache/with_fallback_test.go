@@ -2,10 +2,10 @@ package cache
 
 import "testing"
 
-func TestCacheWithFallback(t *testing.T) {
+func TestWithFallback(t *testing.T) {
 	t.Run("Load", func(t *testing.T) {
 		var c1, c2 Cache[string, int]
-		c := CacheWithFallback[string, int]{
+		c := WithFallback[string, int]{
 			Caches: []Cacher[string, int]{&c1, &c2},
 		}
 
@@ -33,7 +33,7 @@ func TestCacheWithFallback(t *testing.T) {
 
 	t.Run("Store", func(t *testing.T) {
 		var c1, c2 Cache[string, int]
-		c := CacheWithFallback[string, int]{
+		c := WithFallback[string, int]{
 			Caches: []Cacher[string, int]{&c1, &c2},
 		}
 

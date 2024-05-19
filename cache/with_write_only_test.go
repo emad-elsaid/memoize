@@ -2,9 +2,9 @@ package cache
 
 import "testing"
 
-func TestWriteOnlyCache(t *testing.T) {
+func TestWithWriteOnly(t *testing.T) {
 	var c1 Cache[string, int]
-	wo := WriteOnlyCache[string, int]{&c1}
+	wo := WithWriteOnly[string, int]{&c1}
 
 	c1.Store("k1", 1)
 	v, ok := wo.Load("k1")

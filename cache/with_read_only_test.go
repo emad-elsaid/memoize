@@ -2,9 +2,9 @@ package cache
 
 import "testing"
 
-func TestReadOnlyCache(t *testing.T) {
+func TestWithReadOnly(t *testing.T) {
 	var c1 Cache[string, int]
-	ro := ReadOnlyCache[string, int]{&c1}
+	ro := WithReadOnly[string, int]{&c1}
 
 	c1.Store("k1", 1)
 	v, ok := ro.Load("k1")
