@@ -4,7 +4,7 @@ import "testing"
 
 func TestWithReadOnly(t *testing.T) {
 	var c1 Cache[string, int]
-	ro := WithReadOnly[string, int]{&c1}
+	ro := WithReadOnly(&c1)
 
 	c1.Store("k1", 1)
 	v, ok := ro.Load("k1")

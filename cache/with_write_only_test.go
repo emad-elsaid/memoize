@@ -4,7 +4,7 @@ import "testing"
 
 func TestWithWriteOnly(t *testing.T) {
 	var c1 Cache[string, int]
-	wo := WithWriteOnly[string, int]{&c1}
+	wo := WithWriteOnly(&c1)
 
 	c1.Store("k1", 1)
 	v, ok := wo.Load("k1")
