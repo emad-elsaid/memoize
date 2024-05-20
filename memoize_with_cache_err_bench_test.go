@@ -5,7 +5,7 @@ import (
 	"math"
 	"testing"
 
-	. "github.com/emad-elsaid/memoize/cache"
+	"github.com/emad-elsaid/memoize/cache"
 )
 
 const maxKeySpace = 6
@@ -20,7 +20,7 @@ func BenchmarkMemoizerWithCacheErr(b *testing.B) {
 		b.Run(name, func(b *testing.B) {
 
 			mem := NewWithCacheErr(
-				&Cache[string, Pair[int]]{},
+				cache.New[string, Pair[int]](),
 				func(k string) (int, error) { return len(k), nil })
 
 			keys := []string{}
@@ -47,7 +47,7 @@ func BenchmarkMemoizerWithCacheErrParallel(b *testing.B) {
 		b.Run(name, func(b *testing.B) {
 
 			mem := NewWithCacheErr(
-				&Cache[string, Pair[int]]{},
+				cache.New[string, Pair[int]](),
 				func(k string) (int, error) { return len(k), nil })
 
 			keys := []string{}

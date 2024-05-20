@@ -5,7 +5,7 @@ import (
 	"math"
 	"testing"
 
-	. "github.com/emad-elsaid/memoize/cache"
+	"github.com/emad-elsaid/memoize/cache"
 )
 
 func BenchmarkMemoizerWithCache(b *testing.B) {
@@ -16,7 +16,7 @@ func BenchmarkMemoizerWithCache(b *testing.B) {
 		b.Run(name, func(b *testing.B) {
 
 			mem := NewWithCache(
-				&Cache[string, int]{},
+				cache.New[string, int](),
 				func(k string) int { return len(k) })
 
 			keys := []string{}
@@ -43,7 +43,7 @@ func BenchmarkMemoizerWithCacheParallel(b *testing.B) {
 		b.Run(name, func(b *testing.B) {
 
 			mem := NewWithCache(
-				&Cache[string, int]{},
+				cache.New[string, int](),
 				func(k string) int { return len(k) })
 
 			keys := []string{}

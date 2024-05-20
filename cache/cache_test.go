@@ -3,6 +3,14 @@ package cache
 import "testing"
 
 func TestCache(t *testing.T) {
+	t.Run("New", func(t *testing.T) {
+		c := New[string, int]()
+		c.Store("k1", 1)
+		v, loaded := c.Load("k1")
+		assertEqual(t, 1, v)
+		assertEqual(t, true, loaded)
+	})
+
 	t.Run("LoadOrStore", func(t *testing.T) {
 		var c Cache[string, int]
 		v, loaded := c.LoadOrStore("k1", 1)
