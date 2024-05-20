@@ -4,8 +4,13 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/emad-elsaid/memoize)](https://goreportcard.com/report/github.com/emad-elsaid/memoize)
 [![codecov](https://codecov.io/gh/emad-elsaid/memoize/graph/badge.svg?token=QBXTR1XRD6)](https://codecov.io/gh/emad-elsaid/memoize)
 
-Golang Memoize implementation for functions of type `func(any) any` and
-`func(any) (any, error)`. Safe for concurrent use.
+<center><img src="/public/logo.svg" width="200"></center>
+
+Memoize is Memoizer for Golang. Extremely fast, Zero dependency, Zero allocation, guarantees duplicate call supression. And safe for concurrent use in high concurrency environments.
+
+Supported functions of types are:
+* `func(any) any`
+* `func(any) (any, error)`
 
 ## Guarantees
 
@@ -133,3 +138,7 @@ BenchmarkMemoizerWithErrParallel/Keys:100000-8       	29371357	       37.95 ns/o
 PASS
 ok  	github.com/emad-elsaid/memoize	67.529s
 ```
+
+## Icon
+
+Icon by [Eucalyp Studio](https://www.iconfinder.com/icons/2890580/ai_artificial_intelligence_brain_electronics_robotics_science_fiction_technology_icon)
