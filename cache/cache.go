@@ -2,6 +2,11 @@ package cache
 
 import "sync"
 
+// New creates a new in-memory cache
+func New[K, V any]() Cacher[K, V] {
+	return &Cache[K, V]{}
+}
+
 // Cache wraps sync.Map to use generic types of key and values instead of any type. It inherits the benefits of sync.Map. its methods can be used concurrently
 type Cache[K any, V any] struct {
 	sync.Map
