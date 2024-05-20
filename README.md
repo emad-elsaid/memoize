@@ -4,7 +4,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/emad-elsaid/memoize)](https://goreportcard.com/report/github.com/emad-elsaid/memoize)
 [![codecov](https://codecov.io/gh/emad-elsaid/memoize/graph/badge.svg?token=QBXTR1XRD6)](https://codecov.io/gh/emad-elsaid/memoize)
 
-<center><img src="/public/logo.svg" width="200"></center>
+<p align="center"><img src="/public/logo.svg" width="200"></p>
 
 Memoize is Memoizer for Golang. Extremely fast, Zero dependency, Zero allocation, guarantees duplicate call supression. And safe for concurrent use in high concurrency environments.
 
