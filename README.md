@@ -8,9 +8,9 @@
 
 Memoize is Memoizer for Golang. Extremely fast, Zero dependency, Zero allocation, guarantees duplicate call supression. And safe for concurrent use in high concurrency environments.
 
-Supported functions of types are:
-* `func(any) any`
-* `func(any) (any, error)`
+Memoize uses Go generics to supporte any functions of type:
+* `func[T1, T2 any](T1) T2`
+* `func[T1, T2 any](T1) (T2, error)`
 
 ## Guarantees
 
