@@ -79,6 +79,7 @@ type Cacher[K any, V any] interface {
 * `memoize` include a subpackage `cache` which provides several implementations for the `Cacher` interface
 * `Cache` is a simple in-memory forever cacher
 * `WithFallback`, `WithReadOnly`, and `WithWriteOnly`...etc wraps a cacher or more to provide or supress functionality
+* `cache/adapters` subpackage include adapters for popular Go caches to `Cacher` interface. such as [Hashicorp/LRU](https://github.com/hashicorp/golang-lru)
 
 ## Brenchmarks
 
