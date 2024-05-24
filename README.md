@@ -80,10 +80,6 @@ type Cacher[K any, V any] interface {
 * `Cache` is a simple in-memory forever cacher
 * `WithFallback`, `WithReadOnly`, and `WithWriteOnly`...etc wraps a cacher or more to provide or supress functionality
 
-
-> [!IMPORTANT]
-> This package is still being tested, use it with caution
-
 ## Brenchmarks
 
 Each struct is tested with two benchmarks:
