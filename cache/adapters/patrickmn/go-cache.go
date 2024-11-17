@@ -12,7 +12,10 @@ type GoCacher interface {
 	SetDefault(k string, x any)
 }
 
-// GoCache creates a new cacher from the patrickmn/go-cache
+// GoCache creates a new cacher from the patrickmn/go-cache As go-cache supports
+// only string keys unfortunately the returned cacher is limited by string keys
+// too.
+//
 // For example:
 //
 //	  c := cache.New(5*time.Minute, 10*time.Minute)
