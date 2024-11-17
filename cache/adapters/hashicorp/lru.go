@@ -5,7 +5,7 @@ import (
 	"github.com/emad-elsaid/memoize/cache"
 )
 
-// Hashicorp LRU cache interface (the part we need)
+// Hashicorp LRU cache interface (the part meomize need)
 type HashicorpLRU[K comparable, V any] interface {
 	Get(K) (V, bool)
 	Add(K, V) bool

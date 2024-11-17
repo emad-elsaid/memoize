@@ -66,7 +66,7 @@ type Cacher[K any, V any] interface {
 }
 ```
 
-## Note on Cacher interface
+## Cacher interface
 
 * `memoize` require the cache interface to implement two simple `Load` and `Store` functions
 * So you can adapt any other caching library to `memoize`
@@ -80,6 +80,49 @@ type Cacher[K any, V any] interface {
 * `Cache` is a simple in-memory forever cacher
 * `WithFallback`, `WithReadOnly`, and `WithWriteOnly`...etc wraps a cacher or more to provide or supress functionality
 * `cache/adapters` subpackage include adapters for popular Go caches to `Cacher` interface. such as [Hashicorp/LRU](https://github.com/hashicorp/golang-lru)
+
+## Cache adapters
+
+`cache/adapters` include adapters for popular go caches. here are examples for using them with `memoize`
+
+### [Patrickmn/go-cache](https://github.com/patrickmn/go-cache)
+
+```go
+import (
+	"github.com/patrickmn/go-cache"
+	"github.com/emad-elsaid/memoize"
+	"github.com/emad-elsaid/memoize/cache/adapters/patrickmn"
+)
+
+// strlen function memoized for 5 minutes with expired items cleaned every 10 minutes
+var strlen = memoize.NewWithCache(
+    patrickmn.GoCache[int](
+        cache.New(5*time.Minute, 10*time.Minute)
+    ),
+
+    func(s string) int {
+        return len(s) 
+    },
+)
+```
+
+### [Hashicorp/golang-lru/v2](https://github.com/hashicorp/golang-lru)
+
+```go
+import (
+	"https://github.com/hashicorp/golang-lru/v2"
+	"github.com/emad-elsaid/memoize"
+	"github.com/emad-elsaid/memoize/cache/adapters/hashicorp"
+)
+
+// strlen function memoized with max 1000 stored items
+var strlen = memoize.NewWithCache(
+    hashicorp.LRU(
+        lru.New[string, int](1000),
+    ),
+    func(s string) int { return len(s) },
+)
+```
 
 ## Brenchmarks
 
