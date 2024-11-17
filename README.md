@@ -124,6 +124,17 @@ var strlen = memoize.NewWithCache(
 )
 ```
 
+### To be implemented
+
+* https://github.com/dgraph-io/ristretto
+* https://github.com/bradfitz/gomemcache
+* https://github.com/redis/go-redis
+* https://github.com/redis/rueidis
+* https://github.com/coocood/freecache
+* https://pegasus.apache.org/
+* https://github.com/hazelcast/hazelcast-go-client
+* https://github.com/allegro/bigcache
+
 ## Brenchmarks
 
 Each struct is tested with two benchmarks:
