@@ -124,7 +124,7 @@ var strlen = memoize.NewWithCache(
 )
 ```
 
-### [dgraph-io/ristretto](* https://github.com/dgraph-io/ristretto/v2)
+### [dgraph-io/ristretto](https://github.com/dgraph-io/ristretto/v2)
 
 ```go 
 import (
