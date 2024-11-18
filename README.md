@@ -134,6 +134,7 @@ var strlen = memoize.NewWithCache(
 * https://pegasus.apache.org/
 * https://github.com/hazelcast/hazelcast-go-client
 * https://github.com/allegro/bigcache
+* https://github.com/goburrow/cache
 
 ## Brenchmarks
 
