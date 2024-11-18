@@ -124,9 +124,32 @@ var strlen = memoize.NewWithCache(
 )
 ```
 
+### [dgraph-io/ristretto](* https://github.com/dgraph-io/ristretto/v2)
+
+```go 
+import (
+	"github.com/dgraph-io/ristretto/v2"
+	"github.com/emad-elsaid/memoize"
+	"github.com/emad-elsaid/memoize/cache/adapters/dgraphio"
+)
+
+// example from ristretto README.md
+var c, _ = ristretto.NewCache(&ristretto.Config[string, int]{
+	NumCounters: 1e7,     // number of keys to track frequency of (10M).
+	MaxCost:     1 << 30, // maximum cost of cache (1GB).
+	BufferItems: 64,      // number of keys per Get buffer.
+})
+
+var strlen = memoize.NewWithCache(
+	dgraphio.Ristretto(c),
+	func(s string) int {
+		return len(s)
+	},
+)
+```
+
 ### To be implemented
 
-* https://github.com/dgraph-io/ristretto
 * https://github.com/bradfitz/gomemcache
 * https://github.com/redis/go-redis
 * https://github.com/redis/rueidis
