@@ -148,6 +148,30 @@ var strlen = memoize.NewWithCache(
 )
 ```
 
+### [goburrow/cache](https://github.com/goburrow/cache)
+
+```go 
+import (
+	"github.com/emad-elsaid/memoize"
+	"github.com/emad-elsaid/memoize/cache/adapters/goburrow"
+	"github.com/goburrow/cache"
+)
+
+var strlen = memoize.NewWithCache(
+	goburrow.Mango[cache.Key, cache.Value, string, int](
+		cache.New(
+			cache.WithMaximumSize(100),                 // Limit number of entries in the cache.
+			cache.WithExpireAfterAccess(1*time.Minute), // Expire entries after 1 minute since last accessed.
+			cache.WithRefreshAfterWrite(2*time.Minute), // Expire entries after 2 minutes since last created.
+		),
+	),
+	func(s string) int {
+		fmt.Println(s)
+		return len(s)
+	},
+)
+```
+
 ### To be implemented
 
 * https://github.com/bradfitz/gomemcache
@@ -157,7 +181,6 @@ var strlen = memoize.NewWithCache(
 * https://pegasus.apache.org/
 * https://github.com/hazelcast/hazelcast-go-client
 * https://github.com/allegro/bigcache
-* https://github.com/goburrow/cache
 
 ## Brenchmarks
 
