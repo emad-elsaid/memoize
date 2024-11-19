@@ -166,7 +166,6 @@ var strlen = memoize.NewWithCache(
 		),
 	),
 	func(s string) int {
-		fmt.Println(s)
 		return len(s)
 	},
 )
