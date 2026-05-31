@@ -171,15 +171,99 @@ var strlen = memoize.NewWithCache(
 )
 ```
 
+### [bradfitz/gomemcache](https://github.com/bradfitz/gomemcache)
+
+```go
+import (
+	"github.com/bradfitz/gomemcache/memcache"
+	"github.com/emad-elsaid/memoize"
+	"github.com/emad-elsaid/memoize/cache/adapters/bradfitz"
+)
+
+mc := memcache.New("localhost:11211")
+var strlen = memoize.NewWithCache(
+	bradfitz.Memcache[int](mc),
+	func(s string) int { return len(s) },
+)
+```
+
+### [redis/go-redis](https://github.com/redis/go-redis)
+
+```go
+import (
+	"context"
+	"github.com/redis/go-redis/v9"
+	"github.com/emad-elsaid/memoize"
+	"github.com/emad-elsaid/memoize/cache/adapters/redis"
+)
+
+rdb := redis.NewClient(&redis.Options{
+	Addr: "localhost:6379",
+})
+var strlen = memoize.NewWithCache(
+	redis.GoRedis[int](context.Background(), rdb),
+	func(s string) int { return len(s) },
+)
+```
+
+### [redis/rueidis](https://github.com/redis/rueidis)
+
+```go
+import (
+	"context"
+	"github.com/redis/rueidis"
+	"github.com/emad-elsaid/memoize"
+	"github.com/emad-elsaid/memoize/cache/adapters/rueidis"
+)
+
+client, _ := rueidis.NewClient(rueidis.ClientOption{
+	InitAddress: []string{"localhost:6379"},
+})
+var strlen = memoize.NewWithCache(
+	rueidis.Rueidis[int](context.Background(), client),
+	func(s string) int { return len(s) },
+)
+```
+
+### [coocood/freecache](https://github.com/coocood/freecache)
+
+```go
+import (
+	"github.com/coocood/freecache"
+	"github.com/emad-elsaid/memoize"
+	"github.com/emad-elsaid/memoize/cache/adapters/coocood"
+)
+
+cacheSize := 100 * 1024 * 1024 // 100MB
+fc := freecache.NewCache(cacheSize)
+var strlen = memoize.NewWithCache(
+	coocood.FreeCache[int](fc, 3600), // 1 hour TTL
+	func(s string) int { return len(s) },
+)
+```
+
+### [allegro/bigcache](https://github.com/allegro/bigcache)
+
+```go
+import (
+	"context"
+	"time"
+	"github.com/allegro/bigcache/v3"
+	"github.com/emad-elsaid/memoize"
+	"github.com/emad-elsaid/memoize/cache/adapters/allegro"
+)
+
+bc, _ := bigcache.New(context.Background(), bigcache.DefaultConfig(10*time.Minute))
+var strlen = memoize.NewWithCache(
+	allegro.BigCache[int](bc),
+	func(s string) int { return len(s) },
+)
+```
+
 ### To be implemented
 
-* https://github.com/bradfitz/gomemcache
-* https://github.com/redis/go-redis
-* https://github.com/redis/rueidis
-* https://github.com/coocood/freecache
 * https://pegasus.apache.org/
 * https://github.com/hazelcast/hazelcast-go-client
-* https://github.com/allegro/bigcache
 
 ## Brenchmarks
 
