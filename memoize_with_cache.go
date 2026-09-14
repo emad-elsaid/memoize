@@ -14,8 +14,16 @@ type MemoizerWithCache[In, Out any] struct {
 
 // Do calls the memoized function with input i and memoize the result and return it
 func (m *MemoizerWithCache[In, Out]) Do(i In) Out {
-	inFlight, _ := m.inFlight.LoadOrStore(i, new(sync.Mutex))
+	inFlight, ok := m.inFlight.Load(i)
+	if !ok {
+		inFlight, _ = m.inFlight.LoadOrStore(i, new(sync.Mutex))
+	}
 	inFlight.Lock()
+	// The entry is intentionally never deleted: removing it while other
+	// goroutines are queued on it would let a later caller acquire a fresh
+	// mutex and run Fun concurrently with the queued ones. Unlock via defer
+	// so a panic in Fun or the cache doesn't poison the key.
+	defer inFlight.Unlock()
 
 	val, ok := m.Cache.Load(i)
 
@@ -23,9 +31,6 @@ func (m *MemoizerWithCache[In, Out]) Do(i In) Out {
 		val = m.Fun(i)
 		m.Cache.Store(i, val)
 	}
-
-	inFlight.Unlock()
-	m.inFlight.Delete(i)
 
 	return val
 }
